@@ -9,41 +9,29 @@ import (
 // Info structure contain informations fetched by the
 // GetInfo function
 type Info struct {
-	Status InfoStatus
-	Head   InfoHead
-}
-
-// InfoStatus structure contain the status part of the
-// /info response
-type InfoStatus struct {
-	Code int
-	Msg  string
-}
-
-// InfoHead structure contain the head part of the
-// /info response
-type InfoHead struct {
-	Method   string
-	Version  string
-	Branch   string
-	Commit   string
-	Services []InfoServices
-}
-
-// InfoServices structure contain the services array
-// of the head part of the /info response
-type InfoServices struct {
-	Mltype      string
-	Name        string
-	Description string
-	Mllib       string
-	Predict     bool
+	Status struct {
+		Code int    `json:"code"`
+		Msg  string `json:"msg"`
+	} `json:"status"`
+	Head struct {
+		Method   string `json:"method"`
+		Version  string `json:"version"`
+		Branch   string `json:"branch"`
+		Commit   string `json:"commit"`
+		Services []struct {
+			Mltype      string `json:"mltype"`
+			Name        string `json:"name"`
+			Description string `json:"description"`
+			Mllib       string `json:"mllib"`
+			Predict     bool   `json:"predict"`
+		} `json:"services"`
+	}
 }
 
 // GetInfo return an object containing informations from /info
-func GetInfo(host string, port string) (info Info, err error) {
+func GetInfo(host string) (info Info, err error) {
 	// Perform GET request on /info
-	resp, err := http.Get("http://" + host + ":" + port + "/info")
+	resp, err := http.Get(host + "/info")
 	if err != nil {
 		return info, err
 	}
