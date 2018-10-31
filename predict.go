@@ -4,22 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
-	"net"
 	"net/http"
-	"time"
 )
-
-var httpTransport = &http.Transport{
-	Dial: (&net.Dialer{
-		Timeout: 10 * time.Second,
-	}).Dial,
-	TLSHandshakeTimeout: 10 * time.Second,
-}
-
-var httpClient = &http.Client{
-	Timeout:   time.Second * 10,
-	Transport: httpTransport,
-}
 
 // PredictResult struct storing predictions result
 type PredictResult struct {
