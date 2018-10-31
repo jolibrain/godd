@@ -74,7 +74,7 @@ func main() {
 	}
 
 	// Get service informations
-	serviceInfoResult, err := godd.GetServiceInfo(myHost, "mask-2")
+	serviceInfoResult, err := godd.GetServiceInfo(myHost, "mask")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func main() {
 	fmt.Println(serviceInfoResult)
 
 	// Delete service
-	serviceDeleteStatus, err := godd.DeleteService(myHost, "mask-2")
+	serviceDeleteStatus, err := godd.DeleteService(myHost, "mask")
 	if err != nil {
 		log.Fatal(err)
 	}
