@@ -56,8 +56,8 @@ type PredictResult struct {
 	} `json:"body"`
 }
 
-// PredictRequest hold data for the /predict
-// request
+// PredictRequest hold data for the
+// prediction request
 type PredictRequest struct {
 	Service             string
 	Width               int
@@ -69,7 +69,7 @@ type PredictRequest struct {
 	ConfidenceThreshold float64
 }
 
-// NewPredict create a PredictRequest object with default values
+// NewPredict create a PredictRequest with default values
 func NewPredict(predict *PredictRequest) *PredictRequest {
 	if predict == nil {
 		predict = &PredictRequest{
