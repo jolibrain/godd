@@ -87,7 +87,7 @@ func NewPredict(predict *PredictRequest) *PredictRequest {
 
 // Predict perform a /predict call and
 // return a PredictResult structure
-func Predict(host string, predictRequest PredictRequest) (result PredictResult, err error) {
+func Predict(host string, predictRequest *PredictRequest) (result PredictResult, err error) {
 	// Turn requestPredict structure into a map for request
 	requestPredict := map[string]interface{}{
 		"service": predictRequest.Service,
