@@ -15,22 +15,104 @@ type Status struct {
 	} `json:"status"`
 }
 
-// ServiceRequest hold data for the
-// service creation request
+// ServiceRequest hold data for the service creation request
+// See: https://deepdetect.com/api/#create-a-service
 type ServiceRequest struct {
+	// General parameters
 	Name        string
-	Description string
-	Mllib       string
-	Type        string
-	Connector   string
-	Width       int
-	Height      int
-	Mean        []float64
-	Nclasses    int
-	GPU         bool
-	GPUID       int
-	Repository  string
-	Extensions  []string
+	Mllib       string `json:"mllib"`
+	Type        string `json:"type"`
+	Description string `json:"description"`
+	// Model
+	Model struct {
+		Repository       string   `json:"repository"`
+		Templates        string   `json:"templates"`
+		Weights          string   `json:"weights"`
+		CreateRepository bool     `json:"create_repository"`
+		IndexPreload     bool     `json:"index_preload"`
+		Extensions       []string `json:"extensions"`
+	} `json:"model"`
+	Parameters struct {
+		Input struct {
+			// Input
+			Connector string `json:"connector"`
+			// Input - image
+			Width         int       `json:"width"`
+			Height        int       `json:"height"`
+			BW            bool      `json:"bw"`
+			MeanTS        float64   `json:"mean"`
+			Mean          []float64 `json:"mean"`
+			STD           float64   `json:"std"`
+			Segmentation  bool      `json:"segmentation"`
+			MultiLabel    bool      `json:"multi_label"`
+			RootFolder    string    `json:"root_folder"`
+			CTC           bool      `json:"ctc"`
+			UnchangedData bool      `json:"unchanged_data"`
+			Bbox          bool      `json:"bbox"`
+			// Input - CSV
+			Label        string   `json:"label"`
+			Ignore       []string `json:"ignore"`
+			LabelOffset  int      `json:"label_offset"`
+			Separator    string   `json:"separator"`
+			ID           string   `json:"id"`
+			Scale        bool     `json:"scale"`
+			Categoricals []string `json:"categoricals"`
+			DB           bool     `json:"db"`
+			// Input - TXT
+			Sentences   bool   `json:"sentences"`
+			Characters  bool   `json:"characters"`
+			Sequence    int    `json:"sequence"`
+			ReadForward bool   `json:"read_forward"`
+			Alphabet    string `json:"alphabet"`
+			Sparse      bool   `json:"sparse"`
+		} `json:"input"`
+		Mllib struct {
+			// Caffe and Caffe2
+			Nclasses           int      `json:"nclasses"`
+			Ntargets           int      `json:"ntargets"`
+			GPU                bool     `json:"gpu"`
+			GPUID              int      `json:"gpuid"`
+			Template           string   `json:"template"`
+			LayersMLP          []int    `json:"layers"`
+			LayersConvnet      []string `json:"layers"`
+			Activation         string   `json:"activation"`
+			Dropout            float64  `json:"dropout"`
+			Regression         bool     `json:"regression"`
+			Autoencoder        bool     `json:"autoencoder"`
+			CropSize           int      `json:"crop_size"`
+			Rotate             bool     `json:"rotate"`
+			Mirror             bool     `json:"mirror"`
+			Finetuning         bool     `json:"finetuning"`
+			DB                 bool     `json:"db"`
+			ScalingTemperature float64  `json:"scaling_temperature"`
+			Loss               string   `json:"loss"`
+			// Noise - images only
+			Prob         float64 `json:"prob"`
+			AllEffects   bool    `json:"all_effects"`
+			Decolorize   bool    `json:"decolorize"`
+			HistEQ       bool    `json:"hist_eq"`
+			Inverse      bool    `json:"inverse"`
+			GaussBlur    bool    `json:"gauss_blur"`
+			Posterize    bool    `json:"posterize"`
+			Erode        bool    `json:"erode"`
+			Saltpepper   bool    `json:"saltpepper"`
+			Clahe        bool    `json:"clahe"`
+			ConvertToHSV bool    `json:"convert_to_hsv"`
+			ConvertToLAB bool    `json:"convert_to_lab"`
+			// Distort - images only
+			Brightness     bool `json:"brightness"`
+			Contrast       bool `json:"contrast"`
+			Saturation     bool `json:"saturation"`
+			HUE            bool `json:"HUE"`
+			RandomOrdering bool `json:"random ordering"`
+			// TensorFlow
+			InputLayer  string `json:"inputlayer"`
+			OutputLayer string `json:"outputlayer"`
+		}
+		Output struct {
+			StoreConfig bool `json:"store_config"`
+		} `json:"output"`
+	} `json:"parameters"`
 }
 
 // ServiceInfo structure contain informations
@@ -74,23 +156,8 @@ func CreateService(host string, service *ServiceRequest) (result *Status, err er
 		"mllib":       service.Mllib,
 		"description": service.Description,
 		"type":        service.Type,
-		"parameters": map[string]interface{}{
-			"input": map[string]interface{}{
-				"connector": service.Connector,
-				"mean":      service.Mean,
-				"width":     service.Width,
-				"height":    service.Height,
-			},
-			"mllib": map[string]interface{}{
-				"nclasses": service.Nclasses,
-				"gpu":      service.GPU,
-				"gpuid":    service.GPUID,
-			},
-		},
-		"model": map[string]interface{}{
-			"repository": service.Repository,
-			"extensions": service.Extensions,
-		},
+		"parameters":  service.Parameters,
+		"model":       service.Model,
 	}
 
 	bytesReq, err := json.Marshal(requestCreate)
