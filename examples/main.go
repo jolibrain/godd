@@ -8,7 +8,7 @@ import (
 	"github.com/CorentinB/godd"
 )
 
-var myHost = "http://localhost:8080"
+var myHost = "http://erist:4242"
 
 func main() {
 	// Get informations on the instance
@@ -27,17 +27,17 @@ func main() {
 	service.Name = "mask"
 	service.Description = "And example mask detection service."
 	service.Mllib = "caffe2"
-	service.Connector = "image"
-	service.Width = 1216
-	service.Height = 800
-	service.Mean = append(service.Mean, 102.9801)
-	service.Mean = append(service.Mean, 115.9465)
-	service.Mean = append(service.Mean, 122.7717)
-	service.Nclasses = 81
-	service.GPU = true
-	service.GPUID = 1
-	service.Repository = "/home/corentin/test_mask/"
-	service.Extensions = append(service.Extensions, "/home/corentin/test_mask/mask")
+	service.Parameters.Input.Connector = "image"
+	service.Parameters.Input.Width = 1216
+	service.Parameters.Input.Height = 800
+	service.Parameters.Input.Mean = append(service.Parameters.Input.Mean, 102.9801)
+	service.Parameters.Input.Mean = append(service.Parameters.Input.Mean, 115.9465)
+	service.Parameters.Input.Mean = append(service.Parameters.Input.Mean, 122.7717)
+	service.Parameters.Mllib.Nclasses = 81
+	service.Parameters.Mllib.GPU = true
+	service.Parameters.Mllib.GPUID = 1
+	service.Model.Repository = "/home/corentin/test_mask/"
+	service.Model.Extensions = append(service.Model.Extensions, "/home/corentin/test_mask/mask")
 
 	// Send the service creation request
 	creationResult, err := godd.CreateService(myHost, service)
@@ -74,7 +74,7 @@ func main() {
 	}
 
 	// Get service informations
-	serviceInfoResult, err := godd.GetServiceInfo(myHost, "mask-2")
+	serviceInfoResult, err := godd.GetServiceInfo(myHost, "mask")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func main() {
 	fmt.Println(serviceInfoResult)
 
 	// Delete service
-	serviceDeleteStatus, err := godd.DeleteService(myHost, "mask-2")
+	serviceDeleteStatus, err := godd.DeleteService(myHost, "mask")
 	if err != nil {
 		log.Fatal(err)
 	}
