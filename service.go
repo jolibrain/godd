@@ -71,7 +71,7 @@ type ServiceRequest struct {
 			Nclasses           int      `json:"nclasses"`
 			Ntargets           int      `json:"ntargets"`
 			GPU                bool     `json:"gpu"`
-			GPUID              int      `json:"gpuid"`
+			GPUID              []int      `json:"gpuid"`
 			Template           string   `json:"template"`
 			LayersMLP          []int    `json:"layers"`
 			LayersConvnet      []string `json:"layers"`
