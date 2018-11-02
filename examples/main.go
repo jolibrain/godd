@@ -35,7 +35,7 @@ func main() {
 	service.Parameters.Input.Mean = append(service.Parameters.Input.Mean, 122.7717)
 	service.Parameters.Mllib.Nclasses = 81
 	service.Parameters.Mllib.GPU = true
-	service.Parameters.Mllib.GPUID = 1
+	service.Parameters.Mllib.GPUID = append(service.Parameters.Mllib.GPUID, 1)
 	service.Model.Repository = "/home/corentin/test_mask/"
 	service.Model.Extensions = append(service.Model.Extensions, "/home/corentin/test_mask/mask")
 
