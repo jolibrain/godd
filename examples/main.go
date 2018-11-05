@@ -8,7 +8,7 @@ import (
 	"github.com/CorentinB/godd"
 )
 
-var myHost = "http://localhost:8080"
+var myHost = "http://erist:4242"
 
 func main() {
 	// Get informations on the instance
@@ -20,8 +20,7 @@ func main() {
 	fmt.Println(info)
 
 	// Create a service
-	var service *godd.ServiceRequest
-	service = godd.NewService(service)
+	var service godd.ServiceRequest
 
 	// Specify values for your service creation
 	service.Name = "mask"
@@ -40,7 +39,7 @@ func main() {
 	service.Model.Extensions = append(service.Model.Extensions, "/home/corentin/test_mask/mask")
 
 	// Send the service creation request
-	creationResult, err := godd.CreateService(myHost, service)
+	creationResult, err := godd.CreateService(myHost, &service)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,17 +51,16 @@ func main() {
 	}
 
 	// Create predict and initialize it
-	var predict *godd.PredictRequest
-	predict = godd.NewPredict(predict)
+	var predict godd.PredictRequest
 
 	// Specify values for your prediction
 	predict.Service = "mask"
-	predict.Width = 1216
-	predict.Height = 800
-	predict.Mask = true
+	predict.Parameters.Input.Width = 1216
+	predict.Parameters.Input.Height = 800
+	predict.Parameters.Output.Mask = true
 	predict.Data = append(predict.Data, "https://t2.ea.ltmcdn.com/fr/images/9/0/0/les_bienfaits_d_avoir_un_chien_1009_600.jpg")
 
-	predictResult, err := godd.Predict(myHost, predict)
+	predictResult, err := godd.Predict(myHost, &predict)
 	if err != nil {
 		log.Fatal(err)
 	}
