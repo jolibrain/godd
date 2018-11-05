@@ -3,7 +3,6 @@ package godd
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -126,8 +125,6 @@ func Predict(host string, predictRequest *PredictRequest) (result PredictResult,
 	if err != nil {
 		return result, err
 	}
-
-	fmt.Println(string(bytesReq))
 
 	// Send HTTP request
 	req, err := http.NewRequest("POST", host+"/predict", bytes.NewBuffer(bytesReq))

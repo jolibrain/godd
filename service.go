@@ -3,7 +3,6 @@ package godd
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -154,8 +153,6 @@ func CreateService(host string, service *ServiceRequest) (result *Status, err er
 	if err != nil {
 		return result, err
 	}
-
-	fmt.Println(string(bytesReq))
 
 	// Send HTTP request
 	req, err := http.NewRequest("PUT", host+"/services/"+service.Name, bytes.NewBuffer(bytesReq))
