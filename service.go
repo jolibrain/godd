@@ -209,7 +209,7 @@ func GetServiceInfo(host string, service string) (info *ServiceInfo, err error) 
 
 // DeleteService delete a service using the
 // /services/<service_name> endpoint, it takes
-// and host and a service name as input and return
+// the host and a service name as input and return
 // a *Status structure.
 func DeleteService(host string, service string) (status *Status, err error) {
 	// Create DELETE request
