@@ -3,6 +3,7 @@ package godd
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -10,9 +11,9 @@ import (
 // Status struct storing requests execution results
 type Status struct {
 	Status struct {
-		Code int    `json:"code"`
-		Msg  string `json:"msg"`
-	} `json:"status"`
+		Code int    `json:"code,omitempty"`
+		Msg  string `json:"msg,omitempty"`
+	} `json:"status,omitempty"`
 }
 
 // ServiceRequest hold data for the service creation request
@@ -20,131 +21,117 @@ type Status struct {
 type ServiceRequest struct {
 	// General parameters
 	Name        string
-	Mllib       string `json:"mllib"`
-	Type        string `json:"type"`
-	Description string `json:"description"`
+	Mllib       string `json:"mllib,omitempty"`
+	Type        string `json:"type,default=supervised"`
+	Description string `json:"description,omitempty"`
 	// Model
 	Model struct {
-		Repository       string   `json:"repository"`
-		Templates        string   `json:"templates"`
-		Weights          string   `json:"weights"`
-		CreateRepository bool     `json:"create_repository"`
-		IndexPreload     bool     `json:"index_preload"`
-		Extensions       []string `json:"extensions"`
-	} `json:"model"`
+		Repository       string   `json:"repository,omitempty"`
+		Templates        string   `json:"templates,omitempty"`
+		Weights          string   `json:"weights,omitempty"`
+		CreateRepository bool     `json:"create_repository,omitempty"`
+		IndexPreload     bool     `json:"index_preload,omitempty"`
+		Extensions       []string `json:"extensions,omitempty"`
+	} `json:"model,omitempty"`
 	Parameters struct {
 		Input struct {
 			// Input
-			Connector string `json:"connector"`
+			Connector string `json:"connector,omitempty"`
 			// Input - image
-			Width         int       `json:"width"`
-			Height        int       `json:"height"`
-			BW            bool      `json:"bw"`
-			MeanTS        float64   `json:"mean"`
-			Mean          []float64 `json:"mean"`
-			STD           float64   `json:"std"`
-			Segmentation  bool      `json:"segmentation"`
-			MultiLabel    bool      `json:"multi_label"`
-			RootFolder    string    `json:"root_folder"`
-			CTC           bool      `json:"ctc"`
-			UnchangedData bool      `json:"unchanged_data"`
-			Bbox          bool      `json:"bbox"`
+			Width         int       `json:"width,omitempty"`
+			Height        int       `json:"height,omitempty"`
+			BW            bool      `json:"bw,omitempty"`
+			MeanTS        float64   `json:"mean,omitempty"`
+			Mean          []float64 `json:"mean,omitempty"`
+			STD           float64   `json:"std,omitempty"`
+			Segmentation  bool      `json:"segmentation,omitempty"`
+			MultiLabel    bool      `json:"multi_label,omitempty"`
+			RootFolder    string    `json:"root_folder,omitempty"`
+			CTC           bool      `json:"ctc,omitempty"`
+			UnchangedData bool      `json:"unchanged_data,omitempty"`
+			Bbox          bool      `json:"bbox,omitempty"`
 			// Input - CSV
-			Label        string   `json:"label"`
-			Ignore       []string `json:"ignore"`
-			LabelOffset  int      `json:"label_offset"`
-			Separator    string   `json:"separator"`
-			ID           string   `json:"id"`
-			Scale        bool     `json:"scale"`
-			Categoricals []string `json:"categoricals"`
-			DB           bool     `json:"db"`
+			Label        string   `json:"label,omitempty"`
+			Ignore       []string `json:"ignore,omitempty"`
+			LabelOffset  int      `json:"label_offset,omitempty"`
+			Separator    string   `json:"separator,omitempty"`
+			ID           string   `json:"id,omitempty"`
+			Scale        bool     `json:"scale,omitempty"`
+			Categoricals []string `json:"categoricals,omitempty"`
+			DB           bool     `json:"db,omitempty"`
 			// Input - TXT
-			Sentences   bool   `json:"sentences"`
-			Characters  bool   `json:"characters"`
-			Sequence    int    `json:"sequence"`
-			ReadForward bool   `json:"read_forward"`
-			Alphabet    string `json:"alphabet"`
-			Sparse      bool   `json:"sparse"`
-		} `json:"input"`
+			Sentences   bool   `json:"sentences,omitempty"`
+			Characters  bool   `json:"characters,omitempty"`
+			Sequence    int    `json:"sequence,omitempty"`
+			ReadForward bool   `json:"read_forward,omitempty"`
+			Alphabet    string `json:"alphabet,omitempty"`
+			Sparse      bool   `json:"sparse,omitempty"`
+		} `json:"input,omitempty"`
 		Mllib struct {
 			// Caffe and Caffe2
-			Nclasses           int      `json:"nclasses"`
-			Ntargets           int      `json:"ntargets"`
-			GPU                bool     `json:"gpu"`
-			GPUID              []int      `json:"gpuid"`
-			Template           string   `json:"template"`
-			LayersMLP          []int    `json:"layers"`
-			LayersConvnet      []string `json:"layers"`
-			Activation         string   `json:"activation"`
-			Dropout            float64  `json:"dropout"`
-			Regression         bool     `json:"regression"`
-			Autoencoder        bool     `json:"autoencoder"`
-			CropSize           int      `json:"crop_size"`
-			Rotate             bool     `json:"rotate"`
-			Mirror             bool     `json:"mirror"`
-			Finetuning         bool     `json:"finetuning"`
-			DB                 bool     `json:"db"`
-			ScalingTemperature float64  `json:"scaling_temperature"`
-			Loss               string   `json:"loss"`
+			Nclasses           int      `json:"nclasses,omitempty"`
+			Ntargets           int      `json:"ntargets,omitempty"`
+			GPU                bool     `json:"gpu,omitempty"`
+			GPUID              []int    `json:"gpuid,omitempty"`
+			Template           string   `json:"template,omitempty"`
+			LayersMLP          []int    `json:"layers,omitempty"`
+			LayersConvnet      []string `json:"layers,omitempty"`
+			Activation         string   `json:"activation,omitempty"`
+			Dropout            float64  `json:"dropout,omitempty"`
+			Regression         bool     `json:"regression,omitempty"`
+			Autoencoder        bool     `json:"autoencoder,omitempty"`
+			CropSize           int      `json:"crop_size,omitempty"`
+			Rotate             bool     `json:"rotate,omitempty"`
+			Mirror             bool     `json:"mirror,omitempty"`
+			Finetuning         bool     `json:"finetuning,omitempty"`
+			DB                 bool     `json:"db,omitempty"`
+			ScalingTemperature float64  `json:"scaling_temperature,omitempty"`
+			Loss               string   `json:"loss,omitempty"`
 			// Noise - images only
-			Prob         float64 `json:"prob"`
-			AllEffects   bool    `json:"all_effects"`
-			Decolorize   bool    `json:"decolorize"`
-			HistEQ       bool    `json:"hist_eq"`
-			Inverse      bool    `json:"inverse"`
-			GaussBlur    bool    `json:"gauss_blur"`
-			Posterize    bool    `json:"posterize"`
-			Erode        bool    `json:"erode"`
-			Saltpepper   bool    `json:"saltpepper"`
-			Clahe        bool    `json:"clahe"`
-			ConvertToHSV bool    `json:"convert_to_hsv"`
-			ConvertToLAB bool    `json:"convert_to_lab"`
+			Prob         float64 `json:"prob,omitempty"`
+			AllEffects   bool    `json:"all_effects,omitempty"`
+			Decolorize   bool    `json:"decolorize,omitempty"`
+			HistEQ       bool    `json:"hist_eq,omitempty"`
+			Inverse      bool    `json:"inverse,omitempty"`
+			GaussBlur    bool    `json:"gauss_blur,omitempty"`
+			Posterize    bool    `json:"posterize,omitempty"`
+			Erode        bool    `json:"erode,omitempty"`
+			Saltpepper   bool    `json:"saltpepper,omitempty"`
+			Clahe        bool    `json:"clahe,omitempty"`
+			ConvertToHSV bool    `json:"convert_to_hsv,omitempty"`
+			ConvertToLAB bool    `json:"convert_to_lab,omitempty"`
 			// Distort - images only
-			Brightness     bool `json:"brightness"`
-			Contrast       bool `json:"contrast"`
-			Saturation     bool `json:"saturation"`
-			HUE            bool `json:"HUE"`
-			RandomOrdering bool `json:"random ordering"`
+			Brightness     bool `json:"brightness,omitempty"`
+			Contrast       bool `json:"contrast,omitempty"`
+			Saturation     bool `json:"saturation,omitempty"`
+			HUE            bool `json:"HUE,omitempty"`
+			RandomOrdering bool `json:"random ordering,omitempty,omitempty"`
 			// TensorFlow
-			InputLayer  string `json:"inputlayer"`
-			OutputLayer string `json:"outputlayer"`
+			InputLayer  string `json:"inputlayer,omitempty"`
+			OutputLayer string `json:"outputlayer,omitempty"`
 		}
 		Output struct {
-			StoreConfig bool `json:"store_config"`
-		} `json:"output"`
-	} `json:"parameters"`
+			StoreConfig bool `json:"store_config,omitempty"`
+		} `json:"output,omitempty"`
+	} `json:"parameters,omitempty"`
 }
 
 // ServiceInfo structure contain informations
 // fetched by the GetServiceInfo function
 type ServiceInfo struct {
 	Status struct {
-		Code int    `json:"code"`
-		Msg  string `json:"msg"`
-	} `json:"status"`
+		Code int    `json:"code,omitempty"`
+		Msg  string `json:"msg,omitempty"`
+	} `json:"status,omitempty"`
 	Body struct {
-		Mllib       string `json:"mllib"`
-		Description string `json:"description"`
-		Name        string `json:"name"`
+		Mllib       string `json:"mllib,omitempty"`
+		Description string `json:"description,omitempty"`
+		Name        string `json:"name,omitempty"`
 		Jobs        []struct {
-			Job    int    `json:"job"`
-			Status string `json:"status"`
-		} `json:"jobs"`
-	} `json:"body"`
-}
-
-// NewService create a *ServiceRequest,
-// it takes a *ServiceRequest as input,
-// initialize it with default values,
-// then return a *ServiceRequest structure.
-func NewService(service *ServiceRequest) *ServiceRequest {
-	if service == nil {
-		service = &ServiceRequest{
-			Description: "",
-			Type:        "supervised",
-		}
-	}
-	return service
+			Job    int    `json:"job,omitempty"`
+			Status string `json:"status,omitempty"`
+		} `json:"jobs,omitempty"`
+	} `json:"body,omitempty"`
 }
 
 // CreateService create a service using the
@@ -152,6 +139,9 @@ func NewService(service *ServiceRequest) *ServiceRequest {
 // a *ServiceRequest as input and return a
 // *CreationResult structure.
 func CreateService(host string, service *ServiceRequest) (result *Status, err error) {
+	if service.Type == "" {
+		service.Type = "supervised"
+	}
 	requestCreate := map[string]interface{}{
 		"mllib":       service.Mllib,
 		"description": service.Description,
@@ -164,6 +154,8 @@ func CreateService(host string, service *ServiceRequest) (result *Status, err er
 	if err != nil {
 		return result, err
 	}
+
+	fmt.Println(string(bytesReq))
 
 	// Send HTTP request
 	req, err := http.NewRequest("PUT", host+"/services/"+service.Name, bytes.NewBuffer(bytesReq))
