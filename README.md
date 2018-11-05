@@ -5,7 +5,7 @@
 # GoDD
 🧠 [DeepDetect](https://github.com/jolibrain/deepdetect) package for easy integration in any Go project
 
-Godd offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdetect) in your Go software, by providing a simple interface to communicate with the different API endpoints supported by DeepDetect.
+GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdetect) in your Go software, by providing a simple interface to communicate with the different API endpoints supported by DeepDetect.
 
 # Install
 
@@ -68,7 +68,7 @@ if creationResult.Status.Code == 200 {
 Predict:
 
 ```go
-// Create predict and initialize it
+// Create predict structure for request parameters
 var predict godd.PredictRequest
 
 // Specify values for your prediction
