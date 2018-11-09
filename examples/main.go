@@ -8,7 +8,7 @@ import (
 	"github.com/CorentinB/godd"
 )
 
-var myHost = "http://erist:4242"
+var myHost = "http://localhost:8080"
 
 func main() {
 	// Get informations on the instance
