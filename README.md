@@ -13,11 +13,24 @@ GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdet
 
 # Examples
 
+[DeepDetect](https://github.com/jolibrain/deepdetect) quickstart with Docker:
+
+`docker pull beniz/deepdetect_cpu`
+
+`docker run -d -p 8080:8080 -v $HOME/deepdetect-models:/opt/my-models beniz/deepdetect_cpu`
+
+`wget https://deepdetect.com/models/voc0712_dd.tar.gz`
+
+`sudo mkdir -p $HOME/deepdetect-models/voc0712 && sudo tar -xvf voc0712_dd.tar.gz -C $HOME/deepdetect-models/voc0712`
+
 Get informations on a DeepDetect instance:
 
 ```go
+// Set DeepDetect host informations
+const myDD = "127.0.0.1:8080"
+
 // Retrieve informations
-info, err := godd.GetInfo(myHost)
+info, err := godd.GetInfo(myDD)
 if err != nil {
 	fmt.Println(err.Error())
 	os.Exit(1)
@@ -39,18 +52,18 @@ Create a service:
 var service godd.ServiceRequest
 
 // Specify values for your service creation
-service.Name = "imagenet"
-service.Description = "Example of service creation with godd"
+service.Name = "imageserv"
+service.Description = "object detection service"
+service.Type = "supervised"
 service.Mllib = "caffe"
 service.Parameters.Input.Connector = "image"
 service.Parameters.Input.Width = 300
 service.Parameters.Input.Height = 300
-service.Parameters.Mllib.Nclasses = 601
-service.Parameters.Mllib.GPU = true
-service.Model.Repository = "/home/corentin/my_model/"
+service.Parameters.Mllib.Nclasses = 21
+service.Model.Repository = "/opt/my-models/voc0712/"
 
 // Send the service creation request
-creationResult, err := godd.CreateService(myHost, &service)
+creationResult, err := godd.CreateService(myDD, &service)
 if err != nil {
 	log.Fatal(err)
 }
@@ -72,17 +85,25 @@ Predict:
 var predict godd.PredictRequest
 
 // Specify values for your prediction
-predict.Service = "imagenet"
+predict.Service = "imageserv"
 predict.Data = append(predict.Data, "https://t2.ea.ltmcdn.com/fr/images/9/0/0/les_bienfaits_d_avoir_un_chien_1009_600.jpg")
+predict.Parameters.Output.Bbox = true
+predict.Parameters.Output.ConfidenceThreshold = 0.1
 
-predictResult, err := godd.Predict(myHost, &predict)
+// Execute the prediction
+predictResult, err := godd.Predict(myDD, &predict)
 if err != nil {
 	log.Fatal(err)
 }
 
+// Print data of the first object detected
 if predictResult.Status.Code == 200 {
-	fmt.Println("Category: " + predictResult.Body.Predictions[0].Classes.Cat)
-	fmt.Println("Probability: " + predictResult.Body.Predictions[0].Classes.Prob)
+	// Print the complete JSON result:
+	// fmt.Println(string(predictResult))
+	fmt.Println("Category: " + predictResult.Body.Predictions[0].Classes[0.Cat)
+	fmt.Println("Probability: " + strconv.FormatFloa(predictResult.Body.Predictions[0].Classes[0].Prob, 'f', 6, 64))
+	var bbox, _ = json.Marshal(predictResult.Body.Predictions[0].Classes[0.Bbox)
+	fmt.Println("Bbox: " + string(bbox))
 } else {
 	fmt.Println("Prediction failed: " + predictResult.Status.Msg)
 }
@@ -94,7 +115,7 @@ Delete a service:
 
 ```go
 // Delete service
-serviceDeleteStatus, err := godd.DeleteService(myHost, "mask")
+serviceDeleteStatus, err := godd.DeleteService(myDD, "imageserv")
 if err != nil {
 	log.Fatal(err)
 }
@@ -103,11 +124,4 @@ fmt.Println("Service deletion:")
 fmt.Println(serviceDeleteStatus)
 ```
 
-**You can see more examples in the [examples](https://github.com/CorentinB/godd/tree/master/examples) folder.**
-
-# Todo list
-
-- [X] /services
-- [X] /predict
-- [X] /info
-- [ ] /train
+**You can see the full examples in the [examples](https://github.com/CorentinB/godd/tree/master/examples) folder.**
