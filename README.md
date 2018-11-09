@@ -11,7 +11,7 @@ GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdet
 
 # Install
 
-`go get -u -d github.com/CorentinB/godd`
+`go get -u github.com/CorentinB/godd`
 
 # Examples
 
