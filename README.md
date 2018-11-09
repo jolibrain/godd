@@ -23,6 +23,8 @@ GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdet
 
 `sudo mkdir -p $HOME/deepdetect-models/voc0712 && sudo tar -xvf voc0712_dd.tar.gz -C $HOME/deepdetect-models/voc0712`
 
+---
+
 Get informations on a DeepDetect instance:
 
 ```go
