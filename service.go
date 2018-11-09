@@ -108,7 +108,7 @@ type ServiceRequest struct {
 			// TensorFlow
 			InputLayer  string `json:"inputlayer,omitempty"`
 			OutputLayer string `json:"outputlayer,omitempty"`
-		}
+		} `json:"mllib,omitempty"`
 		Output struct {
 			StoreConfig bool `json:"store_config,omitempty"`
 		} `json:"output,omitempty"`
