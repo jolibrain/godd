@@ -81,8 +81,8 @@ if err != nil {
 }
 
 if predictResult.Status.Code == 200 {
-    fmt.Println("Category: " + predictResult.Body.Predictions[0].Classes.Cat)
-    fmt.Println("Probability: " + predictResult.Body.Predictions[0].Classes.Prob)
+	fmt.Println("Category: " + predictResult.Body.Predictions[0].Classes.Cat)
+	fmt.Println("Probability: " + predictResult.Body.Predictions[0].Classes.Prob)
 } else {
 	fmt.Println("Prediction failed: " + predictResult.Status.Msg)
 }
