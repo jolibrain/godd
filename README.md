@@ -7,6 +7,8 @@
 
 GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdetect) in your Go software, by providing a simple interface to communicate with the different API endpoints supported by DeepDetect.
 
+**GoDD currrently only support prediction, not training.**
+
 # Install
 
 `go get -u -d github.com/CorentinB/godd`
