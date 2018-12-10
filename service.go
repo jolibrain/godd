@@ -27,6 +27,7 @@ type ServiceRequest struct {
 	Model struct {
 		Repository       string   `json:"repository,omitempty"`
 		Templates        string   `json:"templates,omitempty"`
+		Init             string   `json:"init,omitempty"`
 		Weights          string   `json:"weights,omitempty"`
 		CreateRepository bool     `json:"create_repository,omitempty"`
 		IndexPreload     bool     `json:"index_preload,omitempty"`
