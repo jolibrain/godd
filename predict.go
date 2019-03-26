@@ -98,15 +98,17 @@ type PredictRequest struct {
 			MultiboxRois        bool      `json:"multibox_rois,omitempty"`
 			CTC                 bool      `json:"ctc,omitempty"`
 		} `json:"output,omitempty"`
-		// Caffe / Caffe2
-		GPU          bool   `json:"gpu,omitempty"`
-		GPUID        []int  `json:"gpuid,omitempty"`
-		ExtractLayer string `json:"extract_layer,omitempty"`
-		// Net or TF
-		TestBatchSize int `json:"test_batch_size,omitempty"`
-		// Tensorflow
-		InputLayer  string `json:"inputlayer,omitempty"`
-		OutputLayer string `json:"outputlayer,omitempty"`
+		Mllib struct {
+		      // Caffe / Caffe2
+		      GPU          bool   `json:"gpu,omitempty"`
+		      GPUID        []int  `json:"gpuid,omitempty"`
+		      ExtractLayer string `json:"extract_layer,omitempty"`
+		      // Net or TF
+		      TestBatchSize int `json:"test_batch_size,omitempty"`
+		      // Tensorflow
+		      InputLayer  string `json:"inputlayer,omitempty"`
+		      OutputLayer string `json:"outputlayer,omitempty"`
+		} `json:"mllib,omitempty"` 
 	} `json:"parameters,omitempty"`
 }
 
