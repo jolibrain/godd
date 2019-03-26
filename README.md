@@ -1,6 +1,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
 
-[![Build Status](https://travis-ci.com/CorentinB/godd.svg?token=RUPYCGKsp5yMHL2ydcwd&branch=master)](https://travis-ci.com/CorentinB/godd) [![Go Report Card](https://goreportcard.com/badge/github.com/CorentinB/godd)](https://goreportcard.com/report/github.com/CorentinB/godd) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0d3f90ca8f7146248520913e89e37c9e)](https://www.codacy.com/app/CorentinB/godd?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CorentinB/godd&amp;utm_campaign=Badge_Grade) [![GoDoc](https://godoc.org/github.com/CorentinB/godd?status.svg)](https://godoc.org/github.com/CorentinB/godd)
+[![Build Status](https://travis-ci.com/jolibrain/godd.svg?token=RUPYCGKsp5yMHL2ydcwd&branch=master)](https://travis-ci.com/jolibrain/godd) [![Go Report Card](https://goreportcard.com/badge/github.com/jolibrain/godd)](https://goreportcard.com/report/github.com/jolibrain/godd) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0d3f90ca8f7146248520913e89e37c9e)](https://www.codacy.com/app/jolibrain/godd?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jolibrain/godd&amp;utm_campaign=Badge_Grade) [![GoDoc](https://godoc.org/github.com/jolibrain/godd?status.svg)](https://godoc.org/github.com/jolibrain/godd)
 
 # GoDD
 🧠 [DeepDetect](https://github.com/jolibrain/deepdetect) package for easy integration in any Go project
@@ -11,7 +11,7 @@ GoDD offer a simple way to use [DeepDetect](https://github.com/jolibrain/deepdet
 
 # Install
 
-`go get -u github.com/CorentinB/godd`
+`go get -u github.com/jolibrain/godd`
 
 # Examples
 
@@ -128,4 +128,4 @@ fmt.Println("Service deletion:")
 fmt.Println(serviceDeleteStatus)
 ```
 
-**You can see the full examples in the [examples](https://github.com/CorentinB/godd/tree/master/examples) folder.**
+**You can see the full examples in the [examples](https://github.com/jolibrain/godd/tree/master/examples) folder.**
