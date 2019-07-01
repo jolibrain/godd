@@ -134,7 +134,8 @@ func Predict(host string, predictRequest *PredictRequest) (result PredictResult,
 	req.Header.Set("Content-Type", "application/json")
 
 	// Execute request
-	resp, err := httpClient.Do(req)
+	client := http.Client{Timeout: 500 * time.Second}
+	resp, err := client.Do(req)
 	if err != nil {
 		return result, err
 	}
