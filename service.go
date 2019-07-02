@@ -110,7 +110,7 @@ type ServiceRequest struct {
 			InputLayer  string `json:"inputlayer,omitempty"`
 			OutputLayer string `json:"outputlayer,omitempty"`
 			// Memory
-			Datatype 	 int      `json:"datatype,omitempty"`
+			Datatype 	 string   `json:"datatype,omitempty"`
 			MaxBatchSize 	 int      `json:"maxBatchSize,omitempty"`
 			MaxWorkspaceSize int      `json:"maxWorkspaceSize,omitempty"`
 		} `json:"mllib,omitempty"`
