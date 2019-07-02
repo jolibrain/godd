@@ -109,6 +109,10 @@ type ServiceRequest struct {
 			// TensorFlow
 			InputLayer  string `json:"inputlayer,omitempty"`
 			OutputLayer string `json:"outputlayer,omitempty"`
+			// Memory
+			Datatype 	 int      `json:"datatype,omitempty"`
+			MaxBatchSize 	 int      `json:"maxBatchSize,omitempty"`
+			MaxWorkspaceSize int      `json:"maxWorkspaceSize,omitempty"`
 		} `json:"mllib,omitempty"`
 		Output struct {
 			StoreConfig bool `json:"store_config,omitempty"`
