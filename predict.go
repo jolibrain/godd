@@ -79,6 +79,7 @@ type PredictRequest struct {
 			ReadForward   bool   `json:"read_forward,omitempty"`
 			Alphabet      string `json:"alphabet,omitempty"`
 			Sparse        bool   `json:"sparse,omitempty"`
+			Segmentation  bool   `json:"segmentation,omitempty"`
 		} `json:"input,omitempty"`
 		Output struct {
 			Best     int    `json:"best,omitempty"`
@@ -100,16 +101,16 @@ type PredictRequest struct {
 			CTC                 bool      `json:"ctc,omitempty"`
 		} `json:"output,omitempty"`
 		Mllib struct {
-		      // Caffe / Caffe2
-		      GPU          bool   `json:"gpu,omitempty"`
-		      GPUID        []int  `json:"gpuid,omitempty"`
-		      ExtractLayer string `json:"extract_layer,omitempty"`
-		      // Net or TF
-		      TestBatchSize int `json:"test_batch_size,omitempty"`
-		      // Tensorflow
-		      InputLayer  string `json:"inputlayer,omitempty"`
-		      OutputLayer string `json:"outputlayer,omitempty"`
-		} `json:"mllib,omitempty"` 
+			// Caffe / Caffe2
+			GPU          bool   `json:"gpu,omitempty"`
+			GPUID        []int  `json:"gpuid,omitempty"`
+			ExtractLayer string `json:"extract_layer,omitempty"`
+			// Net or TF
+			TestBatchSize int `json:"test_batch_size,omitempty"`
+			// Tensorflow
+			InputLayer  string `json:"inputlayer,omitempty"`
+			OutputLayer string `json:"outputlayer,omitempty"`
+		} `json:"mllib,omitempty"`
 	} `json:"parameters,omitempty"`
 }
 
