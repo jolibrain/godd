@@ -98,6 +98,7 @@ type PredictRequest struct {
 			Search              bool      `json:"search,omitempty"`
 			MultiboxRois        bool      `json:"multibox_rois,omitempty"`
 			CTC                 bool      `json:"ctc,omitempty"`
+			BlankLabel          int       `json:"blank_label,omitempty"`
 		} `json:"output,omitempty"`
 		Mllib struct {
 		      // Caffe / Caffe2
@@ -109,7 +110,7 @@ type PredictRequest struct {
 		      // Tensorflow
 		      InputLayer  string `json:"inputlayer,omitempty"`
 		      OutputLayer string `json:"outputlayer,omitempty"`
-		} `json:"mllib,omitempty"` 
+		} `json:"mllib,omitempty"`
 	} `json:"parameters,omitempty"`
 }
 
